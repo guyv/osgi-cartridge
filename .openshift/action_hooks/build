@@ -1,0 +1,17 @@
+VERSION="4.2.1"
+
+rm -rf versions/*
+
+curl -o felix.tar.gz http://apache.miloslavbrada.cz//felix/org.apache.felix.main.distribution-$VERSION.tar.gz
+
+tar -xf felix.tar.gz
+
+rm felix.tar.gz
+
+mkdir -p versions/$VERSION
+
+mv felix-framework-$VERSION/{bin,bundle,conf} versions/$VERSION
+
+rm -rf felix-framework-$VERSION
+
+echo "$VERSION" > env/OPENSHIFT_OSGI_VERSION

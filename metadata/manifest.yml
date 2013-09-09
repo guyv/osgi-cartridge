@@ -1,0 +1,38 @@
+Name: OSGI
+
+Cartridge-Short-Name: OSGI
+Cartridge-Version: '0.0.1'
+Compatible-Versions: ['0.0.1']
+
+Display-Name: OSGI
+Description: "OSGI is a modular framework for Java"
+Version: '4.2'
+Versions: ['4.2']
+License: "Apache2 license"
+
+Categories:
+  - service
+  - java
+  - osgi
+  - web_framework
+
+Provides:
+  - osgi
+
+Scaling:
+  Min: 1
+  Max: -1
+
+Group-Overrides:
+  - components:
+    - php-5.3
+    - web_proxy
+
+Endpoints:
+  - Private-IP-Name:   IP
+    Private-Port-Name: HTTP_PORT
+    Private-Port:      8080
+    Public-Port-Name:  PROXY_HTTP_PORT
+    Mappings:
+      - Frontend:      "/"
+        Backend:       "/"

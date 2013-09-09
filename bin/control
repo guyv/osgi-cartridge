@@ -1,0 +1,81 @@
+#!/bin/bash
+
+function status() {
+  if [ -f $OPENSHIFT_OSGI_PID ] && ( kill -0 $(cat $OPENSHIFT_OSGI_PID) ); then
+    client_result "OSGI is running"
+  else
+    client_result "OSGI is not running"
+  fi
+}
+
+function start() {
+  echo "Start OSGI"
+  mkdir -p ${OPENSHIFT_DATA_DIR}.cache
+  if [ -e bundle ]; then
+    echo "Bundles are already linked"
+  else
+    ln -s ${OPENSHIFT_OSGI_DIR}versions/$OPENSHIFT_OSGI_VERSION/bundle bundle
+  fi
+  java -jar ${OPENSHIFT_OSGI_DIR}versions/$OPENSHIFT_OSGI_VERSION/bin/felix.jar ${OPENSHIFT_DATA_DIR}.cache
+  return 0
+}
+
+function stop() {
+  echo "Stop OSGI"
+
+  if [ -f $OPENSHIFT_OSGI_PID ]; then
+    kill -s SIGTERM $(cat $OPENSHIFT_OSGI_PID)
+    rm $OPENSHIFT_OSGI_PID
+  fi
+
+  return 0
+}
+
+function build() {
+  return 0
+}
+
+function post-deploy() {
+  return 0
+}
+
+function pre-build() {
+  return 0
+}
+
+function tidy() {
+  return 0
+}
+
+# Wrappers
+
+function restart() {
+  stop
+  start
+}
+
+function update() {
+  return 0
+}
+
+# Validate input
+
+if ! [ $# -gt 0 ]; then
+  echo "Usage: $0 [start|restart|graceful|graceful-stop|stop|status|update]"
+  exit 1
+fi
+
+# Handle commands.
+
+case "$1" in
+  start)               start       ;;
+  restart|graceful)    restart     ;;
+  graceful-stop|stop)  stop        ;;
+  status)              status      ;;
+  build)               build       ;;
+  pre-build)           pre-build   ;;
+  post-deploy)         post-deploy ;;
+  tidy)                tidy        ;;
+  update)              update      ;;
+  *)
+esac
