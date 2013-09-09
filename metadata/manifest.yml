@@ -3,6 +3,7 @@ Name: OSGI
 Cartridge-Short-Name: OSGI
 Cartridge-Version: '0.0.1'
 Compatible-Versions: ['0.0.1']
+Cartridge-Vendor: mjelen
 
 Display-Name: OSGI
 Description: "OSGI is a modular framework for Java"
