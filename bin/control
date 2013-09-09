@@ -10,13 +10,13 @@ function status() {
 
 function start() {
   echo "Start OSGI"
+  
   mkdir -p ${OPENSHIFT_DATA_DIR}.cache
-  if [ -e bundle ]; then
-    echo "Bundles are already linked"
-  else
-    ln -s ${OPENSHIFT_OSGI_DIR}versions/$OPENSHIFT_OSGI_VERSION/bundle bundle
-  fi
-  java -jar ${OPENSHIFT_OSGI_DIR}versions/$OPENSHIFT_OSGI_VERSION/bin/felix.jar ${OPENSHIFT_DATA_DIR}.cache
+  
+  cd ${OPENSHIFT_REPO_DIR}
+
+  java -jar ${OPENSHIFT_OSGI_DIR}versions/$OPENSHIFT_OSGI_VERSION/bin/felix.jar -b ${OPENSHIFT_OSGI_DIR}versions/$OPENSHIFT_OSGI_VERSION/bundle ${OPENSHIFT_DATA_DIR}.cache > ${OPENSHIFT_OSGI_DIR}logs/osgi.log
+
   return 0
 }
 
