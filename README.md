@@ -1,3 +1,20 @@
-## OpenShift Cartridge Development Kit - makes creating carts easy!
+# OpenShift OSGI cartridge
 
-For the latest on creating cartridges, read the [Cartridge Writer's Guide](https://github.com/openshift/origin-server/blob/master/node/README.writing_cartridges.md)
+This cartridge embeds Apache Felix runtime as a base for OSGI based applications on OpenShift.
+
+## How to
+
+Just create new gear with this cartridge
+
+```
+rhc create-app <your app name> http://osgicart-mjelen.rhcloud.com/manifest/master
+```
+
+## Control
+
+At this time, there is not functionality exposed by default. When you start the cartridge, OSGI environment is started for you, however there is no public facing interface. To control the cartridge, you need to SSH inside your gear and manage the environment using the provided telnet server.
+
+```
+rhc ssh <your app name>
+telnet ${OPENSHIFT_OSGI_IP} 16666
+```
