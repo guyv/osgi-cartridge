@@ -1,12 +1,14 @@
 #!/bin/bash
 
 VERSION="4.2.1"
+REMOTE_SHELL="1.1.2"
+APACHE_MIRROR="http://apache.miloslavbrada.cz"
 
 cd ${OPENSHIFT_OSGI_DIR}
 
 rm -rf versions/*
 
-curl -o felix.tar.gz http://apache.miloslavbrada.cz//felix/org.apache.felix.main.distribution-$VERSION.tar.gz
+curl -o felix.tar.gz ${APACHE_MIRROR}/felix/org.apache.felix.main.distribution-$VERSION.tar.gz
 
 tar -xf felix.tar.gz
 
@@ -19,3 +21,5 @@ mv felix-framework-$VERSION/{bin,bundle,conf} versions/$VERSION
 rm -rf felix-framework-$VERSION
 
 echo "$VERSION" > env/OPENSHIFT_OSGI_VERSION
+
+curl -o versions/$VERSION/bundle/org.apache.felix.shell.remote-$REMOTE_SHELL.jar ${APACHE_MIRROR}/felix/org.apache.felix.shell.remote-$REMOTE_SHELL.jar

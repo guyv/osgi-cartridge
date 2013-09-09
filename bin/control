@@ -15,7 +15,7 @@ function start() {
   
   cd ${OPENSHIFT_REPO_DIR}
 
-  nohup java -jar ${OPENSHIFT_OSGI_DIR}versions/$OPENSHIFT_OSGI_VERSION/bin/felix.jar -b ${OPENSHIFT_OSGI_DIR}versions/$OPENSHIFT_OSGI_VERSION/bundle ${OPENSHIFT_DATA_DIR}.cache </dev/null > ${OPENSHIFT_OSGI_DIR}logs/osgi.log 2>&1
+  nohup java -Dos.ip="${OPENSHIFT_OSGI_IP}" -Dfelix.config.properties=file:${OPENSHIFT_REPO_DIR}conf/config.properties -jar ${OPENSHIFT_OSGI_DIR}versions/$OPENSHIFT_OSGI_VERSION/bin/felix.jar -b ${OPENSHIFT_OSGI_DIR}versions/$OPENSHIFT_OSGI_VERSION/bundle ${OPENSHIFT_DATA_DIR}.cache </dev/null > ${OPENSHIFT_OSGI_DIR}logs/osgi.log 2>&1 &
 
   return 0
 }
