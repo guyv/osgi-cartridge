@@ -16,5 +16,5 @@ At this time, there is not functionality exposed by default. When you start the 
 
 ```
 rhc ssh <your app name>
-telnet ${OPENSHIFT_OSGI_IP} 16666
+telnet ${OPENSHIFT_OSGI_IP} 15026
 ```
