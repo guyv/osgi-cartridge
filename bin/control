@@ -15,8 +15,8 @@ function start() {
     ln -s ${OPENSHIFT_OSGI_DIR}versions/current/config ${OPENSHIFT_REPO_DIR}config
   fi
 
-  if [ ! -e libs ]; then
-    ln -s ${OPENSHIFT_OSGI_DIR}versions/current/libs ${OPENSHIFT_REPO_DIR}libs
+  if [ ! -e lib ]; then
+    ln -s ${OPENSHIFT_OSGI_DIR}versions/current/lib ${OPENSHIFT_REPO_DIR}lib
   fi
 
   if [ ! -e logs ]; then
