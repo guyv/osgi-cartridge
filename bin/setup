@@ -1,25 +1,9 @@
 #!/bin/bash
 
-VERSION="4.2.1"
-REMOTE_SHELL="1.1.2"
-APACHE_MIRROR="http://apache.miloslavbrada.cz"
+git clone https://mjelen@bitbucket.org/mjelen/osgi-runtime.git versions/current
 
-cd ${OPENSHIFT_OSGI_DIR}
+cd versions/current
 
-rm -rf versions/*
+./setup.sh
 
-curl -o felix.tar.gz ${APACHE_MIRROR}/felix/org.apache.felix.main.distribution-$VERSION.tar.gz
-
-tar -xf felix.tar.gz
-
-rm felix.tar.gz
-
-mkdir -p versions/$VERSION
-
-mv felix-framework-$VERSION/{bin,bundle,conf} versions/$VERSION
-
-rm -rf felix-framework-$VERSION
-
-echo "$VERSION" > env/OPENSHIFT_OSGI_VERSION
-
-curl -o versions/$VERSION/bundle/org.apache.felix.shell.remote-$REMOTE_SHELL.jar ${APACHE_MIRROR}/felix/org.apache.felix.shell.remote-$REMOTE_SHELL.jar
+mkdir -p ${OPENSHIFT_DATA_DIR}run

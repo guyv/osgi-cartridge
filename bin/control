@@ -1,34 +1,35 @@
 #!/bin/bash
 
 function status() {
-  if [ -f $OPENSHIFT_OSGI_PID ] && ( kill -0 $(cat $OPENSHIFT_OSGI_PID) ); then
-    client_result "OSGI is running"
-  else
-    client_result "OSGI is not running"
-  fi
+  cd ${OPENSHIFT_REPO_DIR}
+
+  ${OPENSHIFT_OSGI_DIR}versions/current/bin/runtime status
 }
 
 function start() {
-  echo "Start OSGI"
-  
-  mkdir -p ${OPENSHIFT_DATA_DIR}.cache
-  
   cd ${OPENSHIFT_REPO_DIR}
 
-  nohup java -Dos.ip="${OPENSHIFT_OSGI_IP}" -Dfelix.config.properties=file:${OPENSHIFT_REPO_DIR}conf/config.properties -jar ${OPENSHIFT_OSGI_DIR}versions/$OPENSHIFT_OSGI_VERSION/bin/felix.jar -b ${OPENSHIFT_OSGI_DIR}versions/$OPENSHIFT_OSGI_VERSION/bundle ${OPENSHIFT_DATA_DIR}.cache </dev/null > ${OPENSHIFT_OSGI_DIR}logs/osgi.log 2>&1 &
+  export CONSOLE_HOST="${OPENSHIFT_OSGI_IP}:15026"
 
-  return 0
+  if [ ! -e config ]; then
+    ln -s ${OPENSHIFT_OSGI_DIR}versions/current/config ${OPENSHIFT_REPO_DIR}config
+  fi
+
+  if [ ! -e logs ]; then
+    ln -s ${OPENSHIFT_OSGI_DIR}versions/current/logs ${OPENSHIFT_REPO_DIR}logs
+  fi
+
+  if [ ! -e run ]; then
+    ln -s ${OPENSHIFT_OSGI_DIR}versions/current/run ${OPENSHIFT_REPO_DIR}run
+  fi
+
+  ${OPENSHIFT_OSGI_DIR}versions/current/bin/runtime start
 }
 
 function stop() {
-  echo "Stop OSGI"
+  cd ${OPENSHIFT_REPO_DIR}
 
-  if [ -f $OPENSHIFT_OSGI_PID ]; then
-    kill -s SIGTERM $(cat $OPENSHIFT_OSGI_PID)
-    rm $OPENSHIFT_OSGI_PID
-  fi
-
-  return 0
+  ${OPENSHIFT_OSGI_DIR}versions/current/bin/runtime stop
 }
 
 function build() {
