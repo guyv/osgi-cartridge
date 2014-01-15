@@ -7,7 +7,7 @@ This cartridge embeds Apache Felix runtime as a base for OSGI based applications
 Just create new gear with this cartridge
 
 ```
-http://cartreflect-claytondev.rhcloud.com/reflect?github=openshift-cartridges/osgi-cartridge
+rhc create-app <your app name> http://cartreflect-claytondev.rhcloud.com/reflect?github=openshift-cartridges/osgi-cartridge
 ```
 
 ## Control
